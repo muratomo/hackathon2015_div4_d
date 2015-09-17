@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreLocation
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSessionDataDelegate {
     
     let la_label = UILabel()
     let lo_label = UILabel()
@@ -31,6 +31,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var imgArray :[UIImage] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //配列に空のimgを格納
+        imgArray = [img0, img1, img2, img3, img4]
+        
+        // 窓のview生成
+        draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height/2)
+        draw.backgroundColor = UIColor.lightGrayColor()
+        self.view.addSubview(draw)
         
         //配列に空のimgを格納
         imgArray = [img0, img1, img2, img3, img4]
@@ -96,9 +104,20 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.view.addSubview(la_label)
         self.view.addSubview(lo_label)
         
+    }
+    
+    func onView(x:Int){
+        
+        screenImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        screenImage.image = imgArray[x]
+        self.view.addSubview(screenImage)
+        
         windowImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(windowImage)
         windowImage.image = UIImage(named: "waku.png")
+
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -122,6 +141,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         la_label.sizeToFit()
         lo_label.sizeToFit()
+        
+        println(latitude)
+        
+        getWeather()
+        
     }
     
     // 認証が変更された時に呼び出されるメソッド.
@@ -163,5 +187,74 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         self.view.addSubview(resetButton)
 
         self.view.addSubview(windowImage)
+    }
+    
+    func getWeather(){
+        println (latitude)
+        var urlString = "http://api.openweathermap.org/data/2.5/forecast?units=metric&lat=" + toString(latitude) + "&lon=" + toString(longitude)
+        println(urlString)
+        var isInLoad = false
+        let now = NSDate() // 現在日時の取得
+        let dateFormatter = NSDateFormatter()
+        
+        var w_date:NSString!
+        var w_main_str:NSString = ""
+        let check_weather:[NSString] = ["Clear", "Clouds", "Rain", "Snow", "その他"];
+        
+        var sendparams:Int = 4
+        
+        
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US") // ロケールの設定
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss" // 日付フォーマットの設定
+        
+        
+        var url = NSURL(string: urlString)!
+        // 通信用のConfigを生成.
+        let myConfig:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        
+        // Sessionを生成.
+        let mySession:NSURLSession = NSURLSession(configuration: myConfig, delegate: self, delegateQueue: nil)
+        // タスクの生成.
+        let myTask:NSURLSessionDataTask = mySession.dataTaskWithURL(url, completionHandler: { (data, response, err) -> Void in
+            // リソースの取得が終わると、ここに書いた処理が実行される
+            var json:NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as! NSDictionary
+                let i = 0
+            println(json)
+                if let statusesDic = json as? NSDictionary{
+                    if let aStatus = statusesDic["list"] as? NSArray {
+                        println("aaaaa")
+                        for_i: for w_list in aStatus {
+                            println(w_list["dt_txt"])
+                            if w_list["dt_txt"]!!.compare(dateFormatter.stringFromDate(now)) == NSComparisonResult.OrderedDescending{
+                                println("- 日付が対象より古い");
+                                if let w_main = w_list["weather"] as? NSArray{
+                                    if let w_mainlist = w_main[0] as? NSDictionary{
+                                        println(w_mainlist["main"])
+                                        w_main_str = w_mainlist["main"] as! NSString
+                                        println(w_main_str)
+                                        break for_i
+                                    }
+                                }
+                            }else if (w_list["dt_txt"]!!.compare(dateFormatter.stringFromDate(now)) == NSComparisonResult.OrderedAscending){
+                                println("- 日付が対象より新しい");//上記の場合、date2014の方が2015年よりも小さいのでこ  こにきます。
+                            }else{
+                                println("- 日付が同じです");
+                            }
+                        }
+                    }
+                }
+                var j:Int
+                for j=0; j<5; j++ {
+                    if check_weather[j] == w_main_str {
+                        println (j)
+                        sendparams = j
+                        println(sendparams)
+                        self.onView(sendparams)
+                    }
+                }
+            })
+            // タスクの実行.
+        myTask.resume()
     }
 }
