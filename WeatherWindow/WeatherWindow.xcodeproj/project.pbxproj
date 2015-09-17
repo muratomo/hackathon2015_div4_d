@@ -13,6 +13,8 @@
 		94B572AC1BAA96C0003E67B9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 94B572AB1BAA96C0003E67B9 /* Images.xcassets */; };
 		94B572AF1BAA96C0003E67B9 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94B572AD1BAA96C0003E67B9 /* LaunchScreen.xib */; };
 		94B572BB1BAA96C0003E67B9 /* WeatherWindowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B572BA1BAA96C0003E67B9 /* WeatherWindowTests.swift */; };
+		94B572C91BAACBB4003E67B9 /* drawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B572C81BAACBB4003E67B9 /* drawView.swift */; };
+		94B572CB1BAACCF0003E67B9 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94B572CA1BAACCF0003E67B9 /* Line.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 		94B572B41BAA96C0003E67B9 /* WeatherWindowTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherWindowTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		94B572B91BAA96C0003E67B9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		94B572BA1BAA96C0003E67B9 /* WeatherWindowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherWindowTests.swift; sourceTree = "<group>"; };
+		94B572C81BAACBB4003E67B9 /* drawView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = drawView.swift; sourceTree = "<group>"; };
+		94B572CA1BAACCF0003E67B9 /* Line.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 			children = (
 				94B572A41BAA96C0003E67B9 /* AppDelegate.swift */,
 				94B572A61BAA96C0003E67B9 /* ViewController.swift */,
+				94B572C81BAACBB4003E67B9 /* drawView.swift */,
+				94B572CA1BAACCF0003E67B9 /* Line.swift */,
 				94B572A81BAA96C0003E67B9 /* Main.storyboard */,
 				94B572AB1BAA96C0003E67B9 /* Images.xcassets */,
 				94B572AD1BAA96C0003E67B9 /* LaunchScreen.xib */,
@@ -213,7 +219,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				94B572A71BAA96C0003E67B9 /* ViewController.swift in Sources */,
+				94B572C91BAACBB4003E67B9 /* drawView.swift in Sources */,
 				94B572A51BAA96C0003E67B9 /* AppDelegate.swift in Sources */,
+				94B572CB1BAACCF0003E67B9 /* Line.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
