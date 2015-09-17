@@ -10,8 +10,6 @@ import UIKit
 import CoreLocation
 class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionDelegate, NSURLSessionDataDelegate {
     
-    let la_label = UILabel()
-    let lo_label = UILabel()
     let resetButton = UIButton()
     var draw = drawView()
 
@@ -35,34 +33,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         //配列に空のimgを格納
         imgArray = [img0, img1, img2, img3, img4]
         
-        // 窓のview生成
-        draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height/2)
-        draw.backgroundColor = UIColor.lightGrayColor()
-        self.view.addSubview(draw)
-        
-        //配列に空のimgを格納
-        imgArray = [img0, img1, img2, img3, img4]
-        
-        screenImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        screenImage.image = imgArray[0]
-        self.view.addSubview(screenImage)
-        
-        // お絵かきview生成
-        if(true) {
-            draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-            draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
-            self.view.addSubview(draw)
-        
-            // clearボタンのセット
-            resetButton.backgroundColor = UIColor.greenColor()
-            resetButton.setTitle("RESET", forState: UIControlState.Normal)
-            resetButton.sizeToFit()
-            resetButton.layer.position = CGPoint(x: self.view.frame.width - resetButton.frame.width,
-                y:self.view.frame.height - resetButton.frame.height)
-            resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
-            self.view.addSubview(resetButton)
-        }
-            
         // 各GPSインスタンスの生成.
         myLocationManager = CLLocationManager()
         latitude = CLLocationDegrees()
@@ -85,39 +55,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
             // まだ承認が得られていない場合は、認証ダイアログを表示.
             self.myLocationManager.requestAlwaysAuthorization();
         }
-        
         // 位置情報の更新を開始.
         myLocationManager.startUpdatingLocation()
-        
-        la_label.text = "緯度"
-        lo_label.text = "経度"
-        
-        la_label.font = UIFont.systemFontOfSize(40)
-        lo_label.font = UIFont.systemFontOfSize(40)
-        
-        la_label.sizeToFit()
-        lo_label.sizeToFit()
-        
-        la_label.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2 - 50)
-        lo_label.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2 + 50)
-        
-        self.view.addSubview(la_label)
-        self.view.addSubview(lo_label)
-        
     }
     
     func onView(x:Int){
-        
         screenImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         screenImage.image = imgArray[x]
         self.view.addSubview(screenImage)
         
+        // お絵かきview生成
+        if(x == 2 || x == 3) {
+            draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+            draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
+            self.view.addSubview(draw)
+            
+            // clearボタンのセット
+            resetButton.backgroundColor = UIColor.whiteColor()
+            resetButton.setTitle("RESET", forState: UIControlState.Normal)
+            resetButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            resetButton.sizeToFit()
+            resetButton.layer.masksToBounds = true
+            resetButton.layer.position = CGPoint(x: self.view.frame.width - resetButton.frame.width,
+                y:self.view.frame.height - resetButton.frame.height)
+            resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
+            self.view.addSubview(resetButton)
+        }
+        
         windowImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(windowImage)
         windowImage.image = UIImage(named: "waku.png")
-
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -136,16 +103,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         latitude = myLocation.latitude
         longitude = myLocation.longitude
         
-        la_label.text = toString(latitude)
-        lo_label.text = toString(longitude)
-        
-        la_label.sizeToFit()
-        lo_label.sizeToFit()
-        
-        println(latitude)
-        
         getWeather()
-        
     }
     
     // 認証が変更された時に呼び出されるメソッド.
@@ -178,9 +136,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
         self.view.addSubview(draw)
         
-        resetButton.backgroundColor = UIColor.greenColor()
+        resetButton.backgroundColor = UIColor.whiteColor()
         resetButton.setTitle("RESET", forState: UIControlState.Normal)
+        resetButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         resetButton.sizeToFit()
+        resetButton.layer.masksToBounds = true
         resetButton.layer.position = CGPoint(x: self.view.frame.width - resetButton.frame.width,
             y:self.view.frame.height - resetButton.frame.height)
         resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
@@ -190,9 +150,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
     }
     
     func getWeather(){
-        println (latitude)
         var urlString = "http://api.openweathermap.org/data/2.5/forecast?units=metric&lat=" + toString(latitude) + "&lon=" + toString(longitude)
-        println(urlString)
         var isInLoad = false
         let now = NSDate() // 現在日時の取得
         let dateFormatter = NSDateFormatter()
@@ -202,7 +160,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         let check_weather:[NSString] = ["Clear", "Clouds", "Rain", "Snow", "その他"];
         
         var sendparams:Int = 4
-        
         
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US") // ロケールの設定
         
@@ -219,42 +176,37 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         let myTask:NSURLSessionDataTask = mySession.dataTaskWithURL(url, completionHandler: { (data, response, err) -> Void in
             // リソースの取得が終わると、ここに書いた処理が実行される
             var json:NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as! NSDictionary
-                let i = 0
-            println(json)
-                if let statusesDic = json as? NSDictionary{
-                    if let aStatus = statusesDic["list"] as? NSArray {
-                        println("aaaaa")
-                        for_i: for w_list in aStatus {
-                            println(w_list["dt_txt"])
-                            if w_list["dt_txt"]!!.compare(dateFormatter.stringFromDate(now)) == NSComparisonResult.OrderedDescending{
-                                println("- 日付が対象より古い");
-                                if let w_main = w_list["weather"] as? NSArray{
-                                    if let w_mainlist = w_main[0] as? NSDictionary{
-                                        println(w_mainlist["main"])
-                                        w_main_str = w_mainlist["main"] as! NSString
-                                        println(w_main_str)
-                                        break for_i
-                                    }
+            let i = 0
+            
+            if let statusesDic = json as? NSDictionary{
+                if let aStatus = statusesDic["list"] as? NSArray {
+                    for_i: for w_list in aStatus {
+                        if w_list["dt_txt"]!!.compare(dateFormatter.stringFromDate(now)) == NSComparisonResult.OrderedDescending{
+                            // 日付が対象より古い
+                            if let w_main = w_list["weather"] as? NSArray{
+                                if let w_mainlist = w_main[0] as? NSDictionary{
+                                    w_main_str = w_mainlist["main"] as! NSString
+                                    break for_i
                                 }
-                            }else if (w_list["dt_txt"]!!.compare(dateFormatter.stringFromDate(now)) == NSComparisonResult.OrderedAscending){
-                                println("- 日付が対象より新しい");//上記の場合、date2014の方が2015年よりも小さいのでこ  こにきます。
-                            }else{
-                                println("- 日付が同じです");
                             }
+                        }else if (w_list["dt_txt"]!!.compare(dateFormatter.stringFromDate(now)) == NSComparisonResult.OrderedAscending){
+                            // 日付が対象より新しい
+                            // 上記の場合、date2014の方が2015年よりも小さいのでこ  こにきます。
+                        }else{
+                            // 日付が同じ
                         }
                     }
                 }
-                var j:Int
-                for j=0; j<5; j++ {
-                    if check_weather[j] == w_main_str {
-                        println (j)
-                        sendparams = j
-                        println(sendparams)
-                        self.onView(sendparams)
-                    }
+            }
+            var j:Int
+            for j=0; j<5; j++ {
+                if check_weather[j] == w_main_str {
+                    sendparams = j
                 }
-            })
-            // タスクの実行.
+            }
+            self.onView(sendparams)
+        })
+        // タスクの実行.
         myTask.resume()
     }
 }
