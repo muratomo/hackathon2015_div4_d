@@ -2,13 +2,12 @@
 //  ViewController.swift
 //  WeatherWindow
 //
-//  Created by 村上友教 on 2015/09/17.
-//  Copyright (c) 2015年 村上友教. All rights reserved.
+//  Created by music on 2015/09/17.
+//  Copyright (c) 2015年 kazu. All rights reserved.
 //
 
 import UIKit
 import CoreLocation
-
 class ViewController: UIViewController, CLLocationManagerDelegate {
     
     let la_label = UILabel()
@@ -20,11 +19,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var latitude: CLLocationDegrees!    //緯度
     var longitude: CLLocationDegrees!   //経度
     
+    var screenImage: UIImageView! = UIImageView()
+    var windowImage: UIImageView! = UIImageView()
+    
+    let img0 :UIImage = UIImage(named: "blue_sky.jpg")!
+    let img1 :UIImage = UIImage(named: "cloudy_sky.jpg")!
+    let img2 :UIImage = UIImage(named: "rainy_sky.jpg")!
+    let img3 :UIImage = UIImage(named: "snow_sky.jpg")!
+    let img4 :UIImage = UIImage(named: "etc_sky.jpg")!
+    
+    var imgArray :[UIImage] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view, typically from a nib.
-
         // 窓のview生成
         draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height/2)
         draw.backgroundColor = UIColor.lightGrayColor()
@@ -79,13 +85,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         self.view.addSubview(la_label)
         self.view.addSubview(lo_label)
+        
+        //配列に空のimgを格納
+        imgArray = [img0, img1, img2, img3, img4]
+        
+        screenImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        screenImage.image = imgArray[0]
+        self.view.addSubview(screenImage)
+        
+        windowImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        self.view.addSubview(windowImage)
+        windowImage.image = UIImage(named: "waku.png")
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // GPSから値を取得した際に呼び出されるメソッド.
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
@@ -126,4 +143,3 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         draw.removeFromSuperview()
     }
 }
-
