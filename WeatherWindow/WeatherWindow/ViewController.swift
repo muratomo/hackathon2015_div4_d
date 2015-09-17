@@ -12,7 +12,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     let la_label = UILabel()
     let lo_label = UILabel()
-    let clearButton = UIButton()
+    let resetButton = UIButton()
     var draw = drawView()
 
     var myLocationManager: CLLocationManager!
@@ -31,19 +31,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     var imgArray :[UIImage] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 窓のview生成
-        draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height/2)
-        draw.backgroundColor = UIColor.lightGrayColor()
-        self.view.addSubview(draw)
         
-        // clearボタンのセット
-        clearButton.backgroundColor = UIColor.greenColor()
-        clearButton.setTitle("CLEAR", forState: UIControlState.Normal)
-        clearButton.sizeToFit()
-        clearButton.layer.position = CGPoint(x: self.view.frame.width/2, y:200)
-        clearButton.addTarget(self, action: "clearPaint", forControlEvents: .TouchUpInside)
-        self.view.addSubview(clearButton)
-
+        //配列に空のimgを格納
+        imgArray = [img0, img1, img2, img3, img4]
+        
+        screenImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        screenImage.image = imgArray[0]
+        self.view.addSubview(screenImage)
+        
+        // お絵かきview生成
+        if(true) {
+            draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+            draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
+            self.view.addSubview(draw)
+        
+            // clearボタンのセット
+            resetButton.backgroundColor = UIColor.greenColor()
+            resetButton.setTitle("RESET", forState: UIControlState.Normal)
+            resetButton.sizeToFit()
+            resetButton.layer.position = CGPoint(x: self.view.frame.width - resetButton.frame.width,
+                y:self.view.frame.height - resetButton.frame.height)
+            resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
+            self.view.addSubview(resetButton)
+        }
+            
         // 各GPSインスタンスの生成.
         myLocationManager = CLLocationManager()
         latitude = CLLocationDegrees()
@@ -63,7 +74,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         // まだ認証が得られていない場合は、認証ダイアログを表示.
         if(status == CLAuthorizationStatus.NotDetermined) {
-            
             // まだ承認が得られていない場合は、認証ダイアログを表示.
             self.myLocationManager.requestAlwaysAuthorization();
         }
@@ -85,13 +95,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         
         self.view.addSubview(la_label)
         self.view.addSubview(lo_label)
-        
-        //配列に空のimgを格納
-        imgArray = [img0, img1, img2, img3, img4]
-        
-        screenImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        screenImage.image = imgArray[0]
-        self.view.addSubview(screenImage)
         
         windowImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(windowImage)
@@ -139,7 +142,26 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         }
     }
     
-    func clearPaint() {
+    func resetPaint() {
         draw.removeFromSuperview()
+        resetButton.removeFromSuperview()
+        windowImage.removeFromSuperview()
+        
+        var new_draw = drawView()
+        draw = new_draw
+
+        draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
+        self.view.addSubview(draw)
+        
+        resetButton.backgroundColor = UIColor.greenColor()
+        resetButton.setTitle("RESET", forState: UIControlState.Normal)
+        resetButton.sizeToFit()
+        resetButton.layer.position = CGPoint(x: self.view.frame.width - resetButton.frame.width,
+            y:self.view.frame.height - resetButton.frame.height)
+        resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
+        self.view.addSubview(resetButton)
+
+        self.view.addSubview(windowImage)
     }
 }
