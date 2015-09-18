@@ -51,10 +51,7 @@
 		E231D5DC1BAB19D600A3E39B /* etc_sky@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "etc_sky@2x.jpg"; sourceTree = "<group>"; };
 		E231D5DE1BAB19D600A3E39B /* snow_sky@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "snow_sky@2x.jpg"; sourceTree = "<group>"; };
 		E231D5E41BAB1A2500A3E39B /* waku@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waku@2x.png"; sourceTree = "<group>"; };
-<<<<<<< HEAD
-=======
 		E2E19C641BAB839A00117531 /* rainy_sky@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "rainy_sky@2x.jpg"; sourceTree = "<group>"; };
->>>>>>> 雨と雪
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,7 +323,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -364,7 +361,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -375,10 +372,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: saori matsui (68R6TGT3TE)";
 				INFOPLIST_FILE = WeatherWindow/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "a4c17493-d957-4ac1-89d8-0731cc4d46fd";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -388,7 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = WeatherWindow/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
