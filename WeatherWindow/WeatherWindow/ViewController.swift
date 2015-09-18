@@ -70,19 +70,18 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         // 位置情報の更新を開始.
         myLocationManager.startUpdatingLocation()
         
-                // 雨の描写
-                // 雨ラベルの生成
-                for i in 0..<30 {
-                    rainArray.append(UILabel(frame: CGRectMake(0, 0, 0.9, 80)))
-                    rainArray[i].backgroundColor = UIColor(red: 0.702, green: 0.837, blue: 0.861, alpha: 0.6)
-                    rainArray[i].center = self.view.center
-                    self.view.addSubview(rainArray[i])
-                    rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
-                    rainArray[i].layer.position = CGPointMake(rand, CGFloat(-i*20))
-                }
-                // 雨のタイマー呼び出し
-                timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "rainUpdate:", userInfo: nil, repeats: true)
-        
+        // 雨の描写
+        // 雨ラベルの生成
+        for i in 0..<30 {
+            rainArray.append(UILabel(frame: CGRectMake(0, 0, 0.9, 80)))
+            rainArray[i].backgroundColor = UIColor(red: 0.702, green: 0.837, blue: 0.861, alpha: 0.6)
+            rainArray[i].center = self.view.center
+//            self.view.addSubview(rainArray[i])
+//            rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
+//            rainArray[i].layer.position = CGPointMake(rand, CGFloat(-i*20))
+        }
+        // 雨のタイマー呼び出し
+            timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "rainUpdate:", userInfo: nil, repeats: true)
         
         windowImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(windowImage)
@@ -92,10 +91,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
     
     func onView(x:Int) {
         
+        println("onView")
+        
         // お絵かきview生成
         if(x == 2 || x == 3) {
             draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-            draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
+            draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
             self.view.addSubview(draw)
             
             // clearボタンのセット
@@ -110,7 +111,11 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
             resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
             self.view.addSubview(resetButton)
             
-            println("set button")
+            for i in 0..<30 {
+                self.view.addSubview(rainArray[i])
+                rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
+                rainArray[i].layer.position = CGPointMake(rand, CGFloat(-i*20))
+            }
         }
         
         screenImage.image = imgArray[x]
@@ -200,23 +205,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         draw = new_draw
 
         draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.2)
+        draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
         self.view.addSubview(draw)
-        
-        resetButton.backgroundColor = UIColor.whiteColor()
-        resetButton.setTitle("RESET", forState: UIControlState.Normal)
-        resetButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        resetButton.sizeToFit()
-        resetButton.layer.cornerRadius = 10
-        resetButton.layer.masksToBounds = true
-        resetButton.layer.position = CGPoint(x: self.view.frame.width - resetButton.frame.width,
-            y:self.view.frame.height - resetButton.frame.height)
-        resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
         self.view.addSubview(resetButton)
+
     }
     
     func getWeather(){
-       println("getwe")
         var urlString = "http://api.openweathermap.org/data/2.5/forecast?units=metric&lat=" + toString(latitude) + "&lon=" + toString(longitude)
         var isInLoad = false
         let now = NSDate() // 現在日時の取得

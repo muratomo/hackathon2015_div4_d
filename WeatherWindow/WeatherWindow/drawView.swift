@@ -48,7 +48,7 @@ class drawView: UIView {
             CGContextAddLineToPoint(context, line.end.x, line.end.y)
         }
         
-        CGContextSetRGBStrokeColor(context, 1, 1, 1, 0.5) //線の色
+        CGContextSetRGBStrokeColor(context, 1, 1, 1, 0.2) //線の色
         CGContextSetLineWidth(context, 25)  //線の太さ
         CGContextSetLineCap(context, kCGLineCapRound)   //線を滑らかに
         CGContextStrokePath(context)
