@@ -18,9 +18,9 @@
 		E231D5DF1BAB19D600A3E39B /* blue_sky@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E231D5DA1BAB19D600A3E39B /* blue_sky@2x.jpg */; };
 		E231D5E01BAB19D600A3E39B /* cloudy_sky@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E231D5DB1BAB19D600A3E39B /* cloudy_sky@2x.jpg */; };
 		E231D5E11BAB19D600A3E39B /* etc_sky@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E231D5DC1BAB19D600A3E39B /* etc_sky@2x.jpg */; };
-		E231D5E21BAB19D600A3E39B /* rainy_sky@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E231D5DD1BAB19D600A3E39B /* rainy_sky@2x.jpg */; };
 		E231D5E31BAB19D600A3E39B /* snow_sky@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E231D5DE1BAB19D600A3E39B /* snow_sky@2x.jpg */; };
 		E231D5E51BAB1A2500A3E39B /* waku@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E231D5E41BAB1A2500A3E39B /* waku@2x.png */; };
+		E2E19C651BAB839A00117531 /* rainy_sky@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2E19C641BAB839A00117531 /* rainy_sky@2x.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,9 +49,12 @@
 		E231D5DA1BAB19D600A3E39B /* blue_sky@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "blue_sky@2x.jpg"; sourceTree = "<group>"; };
 		E231D5DB1BAB19D600A3E39B /* cloudy_sky@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cloudy_sky@2x.jpg"; sourceTree = "<group>"; };
 		E231D5DC1BAB19D600A3E39B /* etc_sky@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "etc_sky@2x.jpg"; sourceTree = "<group>"; };
-		E231D5DD1BAB19D600A3E39B /* rainy_sky@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "rainy_sky@2x.jpg"; sourceTree = "<group>"; };
 		E231D5DE1BAB19D600A3E39B /* snow_sky@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "snow_sky@2x.jpg"; sourceTree = "<group>"; };
 		E231D5E41BAB1A2500A3E39B /* waku@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "waku@2x.png"; sourceTree = "<group>"; };
+<<<<<<< HEAD
+=======
+		E2E19C641BAB839A00117531 /* rainy_sky@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "rainy_sky@2x.jpg"; sourceTree = "<group>"; };
+>>>>>>> 雨と雪
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +114,8 @@
 				E231D5DA1BAB19D600A3E39B /* blue_sky@2x.jpg */,
 				E231D5DB1BAB19D600A3E39B /* cloudy_sky@2x.jpg */,
 				E231D5DC1BAB19D600A3E39B /* etc_sky@2x.jpg */,
+				E2E19C641BAB839A00117531 /* rainy_sky@2x.jpg */,
 				E231D5E41BAB1A2500A3E39B /* waku@2x.png */,
-				E231D5DD1BAB19D600A3E39B /* rainy_sky@2x.jpg */,
 				E231D5DE1BAB19D600A3E39B /* snow_sky@2x.jpg */,
 				94B572A31BAA96C0003E67B9 /* Info.plist */,
 			);
@@ -216,6 +219,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2E19C651BAB839A00117531 /* rainy_sky@2x.jpg in Resources */,
 				94B572AA1BAA96C0003E67B9 /* Main.storyboard in Resources */,
 				94B572AF1BAA96C0003E67B9 /* LaunchScreen.xib in Resources */,
 				E231D5E51BAB1A2500A3E39B /* waku@2x.png in Resources */,
@@ -224,7 +228,6 @@
 				94B572AC1BAA96C0003E67B9 /* Images.xcassets in Resources */,
 				E231D5E31BAB19D600A3E39B /* snow_sky@2x.jpg in Resources */,
 				E231D5E01BAB19D600A3E39B /* cloudy_sky@2x.jpg in Resources */,
-				E231D5E21BAB19D600A3E39B /* rainy_sky@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
