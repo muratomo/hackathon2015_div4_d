@@ -27,6 +27,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
     let img4 :UIImage = UIImage(named: "etc_sky.jpg")!
     
     var imgArray :[UIImage] = []
+    
+    var rainArray :[UILabel] = []
+    var snowArray :[UILabel] = []
+    
+    var timer : NSTimer!
+    var cnt :CGFloat = 0
+    var rand :CGFloat = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -61,7 +69,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
     
     func onView(x:Int){
         screenImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        screenImage.image = imgArray[x]
+        screenImage.image = imgArray[2]
         self.view.addSubview(screenImage)
         
         // お絵かきview生成
@@ -82,6 +90,36 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
             self.view.addSubview(resetButton)
         }
         
+        self.view.addSubview(screenImage)
+        
+        
+        // 雨の描写
+        // 雨ラベルの生成
+        for i in 0..<30 {
+            rainArray.append(UILabel(frame: CGRectMake(0, 0, 0.9, 80)))
+            rainArray[i].backgroundColor = UIColor(red: 0.702, green: 0.837, blue: 0.861, alpha: 0.3)
+            rainArray[i].center = self.view.center
+            self.view.addSubview(rainArray[i])
+            rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
+            rainArray[i].layer.position = CGPointMake(rand, CGFloat(-i*20))
+        }
+        // 雨のタイマー呼び出し
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "rainUpdate:", userInfo: nil, repeats: true)
+        
+        /*
+        // 雪の描写
+        // 雪ラベルの生成
+        for i in 0..<30 {
+            snowArray.append(UILabel(frame: CGRectMake(0, 0, 5, 5)))
+            snowArray[i].backgroundColor = UIColor(red: 0.992, green: 0.997, blue: 0.991, alpha: 0.8)
+            snowArray[i].center = self.view.center
+            self.view.addSubview(snowArray[i])
+            rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
+            snowArray[i].layer.position = CGPointMake(rand, CGFloat(-i*20))
+        }
+        // 雪のタイマー呼び出し
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "snowUpdate:", userInfo: nil, repeats: true)
+        */
         windowImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
         self.view.addSubview(windowImage)
         windowImage.image = UIImage(named: "waku.png")
@@ -90,6 +128,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // 雨のタイマー関数
+    func rainUpdate(timer: NSTimer){
+        cnt += 70
+        for i in 0..<30{
+            if (cnt >= self.view.frame.height){
+                cnt = 0
+                rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
+                rainArray[i].layer.position = CGPointMake(rand, CGFloat(-i*20))
+            }
+            rainArray[i].center = CGPoint(x: self.rainArray[i].center.x, y: CGFloat(-i*20) + cnt)
+        }
+    }
+    // 雨のタイマー関数
+    func snowUpdate(timer: NSTimer){
+        cnt += 30
+        for i in 0..<30{
+            if (cnt >= self.view.frame.height){
+                cnt = 0
+                rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
+                rainArray[i].layer.position = CGPointMake(rand, CGFloat(-i*20))
+            }
+            rainArray[i].center = CGPoint(x: self.rainArray[i].center.x, y: CGFloat(-i*20) + cnt)
+        }
     }
     
     // GPSから値を取得した際に呼び出されるメソッド.
