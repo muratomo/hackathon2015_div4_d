@@ -96,7 +96,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         // お絵かきview生成
         if(x == 2 || x == 3) {
             draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-            draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
+            draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
             self.view.addSubview(draw)
             
             // clearボタンのセット
@@ -205,7 +205,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         draw = new_draw
 
         draw.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
+        draw.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
         self.view.addSubview(draw)
         self.view.addSubview(resetButton)
 
