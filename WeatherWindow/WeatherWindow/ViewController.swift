@@ -41,6 +41,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         //配列に空のimgを格納
         imgArray = [img0, img1, img2, img3, img4]
         
+        screenImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        self.view.addSubview(screenImage)
+
+        
         // 各GPSインスタンスの生成.
         myLocationManager = CLLocationManager()
         latitude = CLLocationDegrees()
@@ -65,12 +69,30 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         }
         // 位置情報の更新を開始.
         myLocationManager.startUpdatingLocation()
+        
+                // 雨の描写
+                // 雨ラベルの生成
+                for i in 0..<30 {
+                    rainArray.append(UILabel(frame: CGRectMake(0, 0, 2.9, 80)))
+                    rainArray[i].backgroundColor = UIColor(red: 0.702, green: 0.837, blue: 0.861, alpha: 0.9)
+                    rainArray[i].center = self.view.center
+                    self.view.addSubview(rainArray[i])
+                    rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
+                    rainArray[i].layer.position = CGPointMake(rand, CGFloat(-i*20))
+                }
+                // 雨のタイマー呼び出し
+                timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "rainUpdate:", userInfo: nil, repeats: true)
+        
+        
+        windowImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+        self.view.addSubview(windowImage)
+        windowImage.layer.zPosition = 10
+        windowImage.image = UIImage(named: "waku.png")
     }
     
-    func onView(x:Int){
-        screenImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        screenImage.image = imgArray[2]
-        self.view.addSubview(screenImage)
+    func onView(x:Int) {
+    
+        screenImage.image = imgArray[x]
         
         // お絵かきview生成
         if(x == 2 || x == 3) {
@@ -89,23 +111,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
             resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
             self.view.addSubview(resetButton)
         }
-        
-        self.view.addSubview(screenImage)
-        
-        
-        // 雨の描写
-        // 雨ラベルの生成
-        for i in 0..<30 {
-            rainArray.append(UILabel(frame: CGRectMake(0, 0, 0.9, 80)))
-            rainArray[i].backgroundColor = UIColor(red: 0.702, green: 0.837, blue: 0.861, alpha: 0.3)
-            rainArray[i].center = self.view.center
-            self.view.addSubview(rainArray[i])
-            rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
-            rainArray[i].layer.position = CGPointMake(rand, CGFloat(-i*20))
-        }
-        // 雨のタイマー呼び出し
-        timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "rainUpdate:", userInfo: nil, repeats: true)
-        
+
         /*
         // 雪の描写
         // 雪ラベルの生成
@@ -120,9 +126,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         // 雪のタイマー呼び出し
         timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "snowUpdate:", userInfo: nil, repeats: true)
         */
-        windowImage.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
-        self.view.addSubview(windowImage)
-        windowImage.image = UIImage(named: "waku.png")
     }
     
     override func didReceiveMemoryWarning() {
@@ -157,7 +160,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
     
     // GPSから値を取得した際に呼び出されるメソッド.
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        
         // 配列から現在座標を取得.
         var myLocations: NSArray = locations as NSArray
         var myLastLocation: CLLocation = myLocations.lastObject as! CLLocation
@@ -213,6 +215,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
     }
     
     func getWeather(){
+       println("getwe")
         var urlString = "http://api.openweathermap.org/data/2.5/forecast?units=metric&lat=" + toString(latitude) + "&lon=" + toString(longitude)
         var isInLoad = false
         let now = NSDate() // 現在日時の取得
