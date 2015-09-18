@@ -73,8 +73,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
                 // 雨の描写
                 // 雨ラベルの生成
                 for i in 0..<30 {
-                    rainArray.append(UILabel(frame: CGRectMake(0, 0, 2.9, 80)))
-                    rainArray[i].backgroundColor = UIColor(red: 0.702, green: 0.837, blue: 0.861, alpha: 0.9)
+                    rainArray.append(UILabel(frame: CGRectMake(0, 0, 0.9, 80)))
+                    rainArray[i].backgroundColor = UIColor(red: 0.702, green: 0.837, blue: 0.861, alpha: 0.6)
                     rainArray[i].center = self.view.center
                     self.view.addSubview(rainArray[i])
                     rand = CGFloat(arc4random_uniform(UInt32(self.view.frame.width)))
@@ -91,8 +91,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
     }
     
     func onView(x:Int) {
-    
-        screenImage.image = imgArray[x]
         
         // お絵かきview生成
         if(x == 2 || x == 3) {
@@ -105,12 +103,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
             resetButton.setTitle("RESET", forState: UIControlState.Normal)
             resetButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
             resetButton.sizeToFit()
+            resetButton.layer.cornerRadius = 10
             resetButton.layer.masksToBounds = true
             resetButton.layer.position = CGPoint(x: self.view.frame.width - resetButton.frame.width,
                 y:self.view.frame.height - resetButton.frame.height)
             resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
             self.view.addSubview(resetButton)
+            
+            println("set button")
         }
+        
+        screenImage.image = imgArray[x]
 
         /*
         // 雪の描写
@@ -192,7 +195,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
     func resetPaint() {
         draw.removeFromSuperview()
         resetButton.removeFromSuperview()
-        windowImage.removeFromSuperview()
         
         var new_draw = drawView()
         draw = new_draw
@@ -205,13 +207,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, NSURLSessionD
         resetButton.setTitle("RESET", forState: UIControlState.Normal)
         resetButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         resetButton.sizeToFit()
+        resetButton.layer.cornerRadius = 10
         resetButton.layer.masksToBounds = true
         resetButton.layer.position = CGPoint(x: self.view.frame.width - resetButton.frame.width,
             y:self.view.frame.height - resetButton.frame.height)
         resetButton.addTarget(self, action: "resetPaint", forControlEvents: .TouchUpInside)
         self.view.addSubview(resetButton)
-
-        self.view.addSubview(windowImage)
     }
     
     func getWeather(){
